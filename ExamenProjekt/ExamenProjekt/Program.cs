@@ -10,6 +10,8 @@ namespace ExamenProjekt
     {
         static void Main(string[] args)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
+
             Console.WriteLine("Skriv stof her:");
             string molecule = Console.ReadLine();
             Console.WriteLine(molecule);

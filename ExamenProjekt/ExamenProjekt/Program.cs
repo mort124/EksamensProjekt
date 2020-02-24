@@ -22,5 +22,9 @@ namespace ExamenProjekt
 
             
         }
+        public string GetAbe()
+        {
+            return "abe";
+        }
     }
 }

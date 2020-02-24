@@ -10,9 +10,15 @@ namespace ExamenProjekt
     {
         static void Main(string[] args)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             string thor = "neger";
+            string anker = "gay";
+
             Console.WriteLine(thor);
+            Console.WriteLine(anker);
+
             Console.ReadKey();
+
             
         }
     }

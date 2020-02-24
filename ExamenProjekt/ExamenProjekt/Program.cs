@@ -10,6 +10,7 @@ namespace ExamenProjekt
     {
         static void Main(string[] args)
         {
+            string thor = "neger";
         }
     }
 }

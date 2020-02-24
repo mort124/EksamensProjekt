@@ -10,22 +10,11 @@ namespace ExamenProjekt
     {
         static void Main(string[] args)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            string thor = "neger";
-            string anker = "gay";
-
-            Console.WriteLine(thor);
-            Console.WriteLine(anker);
-            Console.WriteLine(GetAbe());
-
-            Console.ReadKey();
-
+            Console.WriteLine("Skriv stof her:");
+            string molecule = Console.ReadLine();
+            Console.WriteLine(molecule);
             
-        }
-        public static string GetAbe()
-        {
-            string output = "Abe";
-            return output;
+            Console.ReadKey();            
         }
     }
 }

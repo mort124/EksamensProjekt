@@ -12,7 +12,7 @@ namespace ExamenProjekt
         {
             Console.WriteLine("Skriv stof her:");
             string molecule = Console.ReadLine();
-            Console.WriteLine(molecule);
+            Console.WriteLine( "\n"+ molecule);
             
             Console.ReadKey();            
         }

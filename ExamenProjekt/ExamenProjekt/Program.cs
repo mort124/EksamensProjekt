@@ -16,6 +16,7 @@ namespace ExamenProjekt
 
             Console.WriteLine(thor);
             Console.WriteLine(anker);
+            GetAbe();
 
             Console.ReadKey();
 

@@ -16,15 +16,16 @@ namespace ExamenProjekt
 
             Console.WriteLine(thor);
             Console.WriteLine(anker);
-            GetAbe();
+            Console.WriteLine(GetAbe());
 
             Console.ReadKey();
 
             
         }
-        public string GetAbe()
+        public static string GetAbe()
         {
-            return "abe";
+            string output = "Abe";
+            return output;
         }
     }
 }

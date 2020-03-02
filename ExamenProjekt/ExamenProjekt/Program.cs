@@ -38,23 +38,25 @@ namespace ExamenProjekt
         }
         private static int MainChain(string input)
         {
-            int output = 0;
 
-                    foreach (var item in input)
-                    {
-                        if(item == 'C'|| item == 'c')
-                        {
-                            output++;
-                        }
-                    }
+            int output = 0;//The amount of times there has been spottet a c in the string
+
+            foreach (var item in input)
+            {
+                if (item == 'C' || item == 'c') //The molecule string is chekked for c's 
+                {
+                    output++; 
+                }
+            }
             return output;
         }
 
-        private static string AlkaneName(int input)
+        private static string AlkaneName(int input)//Has a list of aklane names  
         {
             string output;
 
-            int index = input-1;
+            int index = input-1; //The array is indexed in regrad to 0, there for the input-
+            //value is subtrected with 1
 
             string[] AlkaneList = new string[]
             {
@@ -65,5 +67,6 @@ namespace ExamenProjekt
 
             return output;
         }
+
     }
 }

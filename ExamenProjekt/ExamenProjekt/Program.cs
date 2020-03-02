@@ -11,12 +11,20 @@ namespace ExamenProjekt
         static void Main(string[] args)
         {
             Console.ForegroundColor = ConsoleColor.Green;
-
-            Console.WriteLine("Skriv stof her:");
-            string molecule = Console.ReadLine();
-            Console.WriteLine( "\n"+ molecule);
-            
-            Console.ReadKey();            
+            bool run = true;
+            while (run)
+            {
+                Console.WriteLine("Skriv stof her:");
+                string molecule = Console.ReadLine();
+                if (molecule != "exit")
+                {
+                    Console.WriteLine("\n" + molecule);
+                }
+                else
+                {
+                    run = false;
+                }
+            }
         }
     }
 }

@@ -12,21 +12,14 @@ namespace ExamenProjekt
         {
             Console.ForegroundColor = ConsoleColor.Green;
             bool run = true;
-            int carbonCount;
             while (run)
             {
                 Console.WriteLine("Skriv stof her:");
                 string molecule = Console.ReadLine();
                 if (molecule != "exit")
                 {
-                    carbonCount = 0;
-                    foreach (var item in molecule)
-                    {
-                        if(item == 'C'|| item == 'c')
-                        {
-                            carbonCount++;
-                        }
-                    }
+                    int carbonCount = 0;
+                    carbonCount = MainChain(molecule);
                     Console.WriteLine(carbonCount.ToString());
                 }
                 else
@@ -35,5 +28,19 @@ namespace ExamenProjekt
                 }
             }
         }
+        private static int MainChain(string input)
+        {
+            int output = 0;
+
+                    foreach (var item in input)
+                    {
+                        if(item == 'C'|| item == 'c')
+                        {
+                            output++;
+                        }
+                    }
+            return output;
+        }
+
     }
 }

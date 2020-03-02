@@ -19,17 +19,24 @@ namespace ExamenProjekt
                 string molecule = Console.ReadLine();
                 if (molecule != "exit")
                 {
-                    string mainChain = MainChain(molecule);
-                    int carbonCount = ChainCount(mainChain);
-                    string alkane = AlkaneName(carbonCount);
-                    Console.WriteLine(alkane);
+                    if (Validate(molecule))
+                    {
+                        string mainChain = MainChain(molecule);
+                        int carbonCount = ChainCount(mainChain);
+                        string alkane = AlkaneName(carbonCount);
+                        Console.WriteLine(alkane);
 
                         Hashtable sideChainTable = SideChains(molecule);
 
-                    foreach (int item in sideChainTable.Keys)
+                        foreach (int item in sideChainTable.Keys)
+                        {
+                            Console.Write(item + "-");
+                            Console.WriteLine(AlkaneName(ChainCount(sideChainTable[item].ToString())));
+                        }
+                    }
+                    else
                     {
-                        Console.Write(item + "-");
-                        Console.WriteLine(AlkaneName(ChainCount(sideChainTable[item].ToString())));
+                        Console.WriteLine("Ugyldigt input");
                     }
                 }
                 else
@@ -40,7 +47,6 @@ namespace ExamenProjekt
         }
         private static Hashtable SideChains(string input)
         {
-            string[] output;
             Hashtable sideChainTable = new Hashtable();
             int chainPos = 0;
 

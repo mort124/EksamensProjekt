@@ -19,9 +19,8 @@ namespace ExamenProjekt
                 string molecule = Console.ReadLine();
                 if (molecule != "exit")
                 {
-
-                    int carbonCount = 0;
-                    carbonCount = MainChain(molecule);
+                    string mainChain = MainChain(molecule);
+                    int carbonCount = ChainCount(mainChain);
                     string alkane = AlkaneName(carbonCount);
                     Console.WriteLine(alkane);
 
@@ -29,8 +28,8 @@ namespace ExamenProjekt
 
                     foreach (int item in sideChainTable.Keys)
                     {
-                        Console.Write(item + " ");
-                        Console.WriteLine(sideChainTable[item]);
+                        Console.Write(item + "-");
+                        Console.WriteLine(AlkaneName(ChainCount(sideChainTable[item].ToString())));
                     }
                 }
                 else
@@ -42,7 +41,7 @@ namespace ExamenProjekt
         private static Hashtable SideChains(string input)
         {
             string[] output;
-            Hashtable sideChainList = new Hashtable();
+            Hashtable sideChainTable = new Hashtable();
             int chainPos = 0;
 
             for (int i = 0; i < input.Length; i++)
@@ -58,13 +57,13 @@ namespace ExamenProjekt
 
                     string sideChain = input.Substring(sideStart + 1, sideEnd - sideStart-1);
 
-                    sideChainList.Add(chainPos, sideChain);
+                    sideChainTable.Add(chainPos, sideChain);
                     i = sideEnd;
                 }
             }
-            return sideChainList;
+            return sideChainTable;
         }
-        private static int MainChain(string input)
+        private static int ChainCount(string input)
         {
 
             int output = 0;//The amount of times there has been spottet a c in the string
@@ -94,6 +93,21 @@ namespace ExamenProjekt
             output = AlkaneList[index];
 
             return output;
+        }
+
+        private static string MainChain(string input)
+        {
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] == '(')
+                {
+                    int sideStart = i;
+                    int sideEnd = input.IndexOf(')', sideStart);
+
+                    input = input.Remove(sideStart, sideEnd - sideStart + 1);
+                }
+            }
+            return input;
         }
 
     }

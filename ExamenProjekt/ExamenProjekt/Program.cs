@@ -19,18 +19,24 @@ namespace ExamenProjekt
                 string molecule = Console.ReadLine();
                 if (molecule != "exit")
                 {
-
-                    int carbonCount = 0;
-                    carbonCount = MainChain(molecule);
-                    string alkane = AlkaneName(carbonCount);
-                    Console.WriteLine(alkane);
-
-                    Hashtable sideChainTable = SideChains(molecule);
-
-                    foreach (int item in sideChainTable.Keys)
+                    if (Validate(molecule))
                     {
-                        Console.Write(item + " ");
-                        Console.WriteLine(sideChainTable[item]);
+                        int carbonCount = 0;
+                        carbonCount = MainChain(molecule);
+                        string alkane = AlkaneName(carbonCount);
+                        Console.WriteLine(alkane);
+
+                        Hashtable sideChainTable = SideChains(molecule);
+
+                        foreach (int item in sideChainTable.Keys)
+                        {
+                            Console.Write(item + " ");
+                            Console.WriteLine(sideChainTable[item]);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Du har skervet din streng forkert");
                     }
                 }
                 else
@@ -94,6 +100,34 @@ namespace ExamenProjekt
             output = AlkaneList[index];
 
             return output;
+        }
+
+        private static bool Validate(string input)
+        {
+            bool accept = false ;
+            int StartParren=0;
+            int EndParren=0;
+        
+
+            foreach (var item in input)
+            {
+                if (item =='(')
+                {
+                    StartParren++;
+                }
+
+                if (item == ')')
+                {
+                    EndParren++;
+                }
+            }
+            if (StartParren==EndParren)
+            {
+                accept = true;
+            }
+           
+
+            return accept;
         }
 
     }

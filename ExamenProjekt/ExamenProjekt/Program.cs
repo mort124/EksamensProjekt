@@ -50,5 +50,20 @@ namespace ExamenProjekt
             return output;
         }
 
+        private static string AlkaneName(int input)
+        {
+            string output;
+
+            int index = input-1;
+
+            string[] AlkaneList = new string[]
+            {
+                "metan", "ethan", "propan", "butan", "pentan", "hexan","heptan","octan","nonan", "decan","undecan", "dodecan"
+            };
+
+            output = AlkaneList[index];
+
+            return output;
+        }
     }
 }

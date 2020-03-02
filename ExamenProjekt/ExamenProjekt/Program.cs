@@ -12,13 +12,22 @@ namespace ExamenProjekt
         {
             Console.ForegroundColor = ConsoleColor.Green;
             bool run = true;
+            int carbonCount;
             while (run)
             {
                 Console.WriteLine("Skriv stof her:");
                 string molecule = Console.ReadLine();
                 if (molecule != "exit")
                 {
-                    Console.WriteLine("\n" + molecule);
+                    carbonCount = 0;
+                    foreach (var item in molecule)
+                    {
+                        if(item == 'C'|| item == 'c')
+                        {
+                            carbonCount++;
+                        }
+                    }
+                    Console.WriteLine(carbonCount.ToString());
                 }
                 else
                 {

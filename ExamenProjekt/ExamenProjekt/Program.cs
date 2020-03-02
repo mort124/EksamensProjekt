@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,10 +19,19 @@ namespace ExamenProjekt
                 string molecule = Console.ReadLine();
                 if (molecule != "exit")
                 {
+
                     int carbonCount = 0;
                     carbonCount = MainChain(molecule);
                     string alkane = AlkaneName(carbonCount);
                     Console.WriteLine(alkane);
+
+                    Hashtable sideChainTable = SideChains(molecule);
+
+                    foreach (int item in sideChainTable.Keys)
+                    {
+                        Console.Write(item + " ");
+                        Console.WriteLine(sideChainTable[item]);
+                    }
                 }
                 else
                 {
@@ -29,12 +39,30 @@ namespace ExamenProjekt
                 }
             }
         }
-        private static string[] SideChains(string input)
+        private static Hashtable SideChains(string input)
         {
             string[] output;
-            input.Split
+            Hashtable sideChainList = new Hashtable();
+            int chainPos = 0;
 
-            return output;
+            for (int i = 0; i < input.Length; i++)
+            {
+                if(input[i] == 'c'||input[i] == 'C')
+                {
+                    chainPos++;
+                }
+                else if (input[i] == '(')
+                {
+                    int sideStart = i;
+                    int sideEnd = input.IndexOf(')', sideStart);
+
+                    string sideChain = input.Substring(sideStart + 1, sideEnd - sideStart-1);
+
+                    sideChainList.Add(chainPos, sideChain);
+                    i = sideEnd;
+                }
+            }
+            return sideChainList;
         }
         private static int MainChain(string input)
         {

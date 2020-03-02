@@ -20,13 +20,21 @@ namespace ExamenProjekt
                 {
                     int carbonCount = 0;
                     carbonCount = MainChain(molecule);
-                    Console.WriteLine(carbonCount.ToString());
+                    string alkane = AlkaneName(carbonCount);
+                    Console.WriteLine(alkane);
                 }
                 else
                 {
                     run = false;
                 }
             }
+        }
+        private static string[] SideChains(string input)
+        {
+            string[] output;
+            input.Split
+
+            return output;
         }
         private static int MainChain(string input)
         {

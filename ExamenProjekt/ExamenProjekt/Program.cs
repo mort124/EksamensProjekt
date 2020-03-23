@@ -36,7 +36,6 @@ namespace ExamenProjekt
                             Console.WriteLine(sideChain);
                         }
                     }
-                    //yeet
                 }
                 else
                 {
@@ -199,6 +198,53 @@ namespace ExamenProjekt
             return accept;
         }
 
+        private static List<string> elements(string input)
+        {
+            List<string> elements = new List<string>();
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i]=='B' && input[i++]=='r')
+                {
+                    elements.Add("Brom");
+                }
+                if (input[i]=='C'&&input[i++]=='l')
+                {
+                    elements.Add("Chlor"); 
+                }
+            }
 
+            foreach (var item in input)
+            {
+                switch (item)
+                {
+                    case 'N':
+                        elements.Add("Nitrogen");
+                        break;
+                    case 'O':
+                        elements.Add("Oxygen");
+                        break;
+                    case 'B':
+                        elements.Add("Bor");
+                        break;
+                    case 'P':
+                        elements.Add("Posphor");
+                        break;
+                    case 'S':
+                        elements.Add("Sulfur");
+                        break;
+                    case 'F':
+                        elements.Add("Fosfor");
+                        break;
+                    case 'I':
+                        elements.Add("Iod");
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+
+            return elements;
+        }
     }
 }

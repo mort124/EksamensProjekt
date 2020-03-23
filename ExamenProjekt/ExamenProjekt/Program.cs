@@ -26,12 +26,14 @@ namespace ExamenProjekt
                         string alkane = AlkaneName(carbonCount);
                         Console.WriteLine(alkane);
 
-                        Hashtable sideChainTable = SideChains(molecule);
+                        List<string> sideChainList = SideChains(molecule);
 
-                        foreach (int item in sideChainTable.Keys)
+                        foreach (string item in sideChainList)
                         {
-                            Console.Write(item + "-");
-                            Console.WriteLine(AlkaneName(ChainCount(sideChainTable[item].ToString())));
+                            int numLength = item.Count(Char.IsDigit);
+                            string sideChain = item.Substring(item.Length-numLength,numLength);
+                            sideChain += "-" + item.Substring(0, item.Length - numLength);
+                            Console.WriteLine(sideChain);
                         }
                     }
                     
@@ -42,11 +44,12 @@ namespace ExamenProjekt
                 }
             }
         }
-        private static Hashtable SideChains(string input)
+
+        private static List<string> SideChains(string input)
         {
-            Hashtable sideChainTable = new Hashtable();
+            List<string> sideChainList = new List<string>();
             int chainPos = 0;
-            string sideChain="";
+            string sideChain = "";
 
             for (int i = 0; i < input.Length; i++)
             {
@@ -65,11 +68,20 @@ namespace ExamenProjekt
                     between sideStart and sideEnd. Adding and subtracting 1 to account for the parentheses 
                     */
                     }
-                    sideChainTable.Add(chainPos, sideChain);
+                    
+                        string namedChain = AlkaneName(ChainCount(sideChain));
+                        namedChain = namedChain.Remove(namedChain.Length - 2, 2);
+                        namedChain += "yl" + chainPos;
+
+                        sideChainList.Add(namedChain);
+                    
+
                     i = sideEnd;
-                }
+
+                    }
             }
-            return sideChainTable;
+            sideChainList.Sort();
+            return sideChainList;
         }
         private static int ChainCount(string input)
         {
@@ -116,7 +128,7 @@ namespace ExamenProjekt
                     {
                         input = input.Remove(sideStart, sideEnd - sideStart + 1);
                     }
-                    
+                    i--;
                 }
             }
             return input;
@@ -180,7 +192,7 @@ namespace ExamenProjekt
             if (EndparrenPos < StartparrenPos)
             {
                 accept = false;
-                Console.WriteLine("Ugyldigt indput: Dine parrenteser står forkert");
+                Console.WriteLine("Ugyldigt input: Dine parrenteser står forkert");
             }
             
             //yeet

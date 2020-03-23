@@ -183,7 +183,7 @@ namespace ExamenProjekt
                 Console.WriteLine("Ugyldigt indput: Dine parrenteser står forkert");
             }
             
-
+            //yeet
             return accept;
         }
 

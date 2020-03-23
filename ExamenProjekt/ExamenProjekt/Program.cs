@@ -34,7 +34,7 @@ namespace ExamenProjekt
                             Console.WriteLine(AlkaneName(ChainCount(sideChainTable[item].ToString())));
                         }
                     }
-                    
+                    //yeet
                 }
                 else
                 {

@@ -21,9 +21,13 @@ namespace ExamenProjekt
                 {
                     if (Validate(molecule))
                     {
-                        string mainChain = MainChain(molecule);
+                        string replacedM = molecule;
+                        replacedM = replacedM.Replace("Br", "L").Replace("Cl", "K");
+
+                        string mainChain = MainChain(replacedM);
                         int carbonCount = ChainCount(mainChain);
                         string alkane = AlkaneName(carbonCount);
+                        string elements = Convert.ToString(Elements(replacedM));
                         Console.WriteLine(alkane);
 
                         List<string> sideChainList = SideChains(molecule);
@@ -198,42 +202,38 @@ namespace ExamenProjekt
             return accept;
         }
 
-        private static List<string> elements(string input)
+        private static List<string> Elements(string input)
         {
+
             List<string> elements = new List<string>();
-            for (int i = 0; i < input.Length; i++)
-            {
-                if (input[i]=='B' && input[i++]=='r')
-                {
-                    elements.Add("Brom");
-                }
-                if (input[i]=='C'&&input[i++]=='l')
-                {
-                    elements.Add("Chlor"); 
-                }
-            }
 
             foreach (var item in input)
             {
                 switch (item)
                 {
+                    case 'L':
+                        elements.Add("Brom");
+                        break;
+                    case 'K':
+                        elements.Add("Chlor");
+                        break;
+                    case 'B':
+                        elements.Add("Bor");
+                        break;
                     case 'N':
                         elements.Add("Nitrogen");
                         break;
                     case 'O':
                         elements.Add("Oxygen");
                         break;
-                    case 'B':
-                        elements.Add("Bor");
-                        break;
                     case 'P':
-                        elements.Add("Posphor");
+                        elements.Add("Fosfor");
                         break;
                     case 'S':
                         elements.Add("Sulfur");
                         break;
                     case 'F':
-                        elements.Add("Fosfor");
+                        elements.Add("Fluor");
                         break;
                     case 'I':
                         elements.Add("Iod");
@@ -241,7 +241,11 @@ namespace ExamenProjekt
                     default:
                         break;
                 }
+            }
 
+            foreach (string element in elements)
+            {
+                Console.WriteLine(element);
             }
 
             return elements;

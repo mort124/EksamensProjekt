@@ -167,8 +167,8 @@ namespace ExamenProjekt
         {
             string output;
 
-            int index = input-1; //The array is indexed in regrad to 0, there for the input-
-            //value is subtrected with 1
+            int index = input-1; /*The array is indexed in regrad to 0, there for the input-
+            value is subtracted with 1*/
 
             string[] AlkaneList = new string[]
             {

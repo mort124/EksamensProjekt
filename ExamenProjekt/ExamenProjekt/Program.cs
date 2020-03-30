@@ -28,7 +28,7 @@ namespace ExamenProjekt
                         int carbonCount = ChainCount(mainChain);
                         string alkane = AlkaneName(carbonCount);
                         string elements = Convert.ToString(Elements(replacedM));
-                        Console.WriteLine(alkane);
+                        
 
                         List<Tuple<string,int>> sideChainList = SideChains(molecule);
 
@@ -54,9 +54,9 @@ namespace ExamenProjekt
                                 }
                             }
                             Console.Write("\b-");
-                            
-
+                            Console.Write(NumToPre(chainAmount)+item+"-");
                         }
+                            Console.WriteLine("\b"+alkane+"\n");
 
                     }
                 }
@@ -90,22 +90,22 @@ namespace ExamenProjekt
                     output = "hexa";
                     break;
                 case 7:
-                    output = "septo";
+                    output = "hepta";
                     break;
                 case 8:
                     output = "octo";
                     break;
                 case 9:
-                    output = "di";
+                    output = "nona";
                     break;
                 case 10:
-                    output = "di";
+                    output = "deca";
                     break;
                 case 11:
-                    output = "di";
+                    output = "undeca";
                     break;
                 case 12:
-                    output = "di";
+                    output = "dodeca";
                     break;
             }
             return output;

@@ -29,7 +29,10 @@ namespace ExamenProjekt
                         string mainChain = MainChain(replacedM);
                         int carbonCount = ChainCount(mainChain);
                         string alkane = AlkaneName(carbonCount);
+                        
+                        string Cyclo = CycloFinder(replacedM);
 
+                        Console.WriteLine(Cyclo);
 
                         List<Tuple<string, int>> sideChainList = SideChains(molecule);
 
@@ -58,6 +61,7 @@ namespace ExamenProjekt
                             Console.Write(NumToPre(chainAmount) + item + "-");
                         }
                         Console.WriteLine("\b" + alkane + "\n");
+
 
                     }
                 }
@@ -169,8 +173,8 @@ namespace ExamenProjekt
         {
             string output;
 
-            int index = input - 1; //The array is indexed in regrad to 0, there for the input-
-            //value is subtrected with 1
+            int index = input-1; /*The array is indexed in regrad to 0, there for the input-
+            value is subtracted with 1*/
 
             string[] AlkaneList = new string[]
             {
@@ -318,6 +322,34 @@ namespace ExamenProjekt
                 }
             }
             return ElementList;
+        }
+        private static string CycloFinder(string input)
+        {
+            string output = "";
+            int end = input.Length - 1;
+            bool accept1 = false;
+            bool accept2 = false;
+
+            if (input[1] == '1')
+            {
+                accept1 = true;
+            }
+            
+            if (input[end]=='1')
+            {
+                accept2 = true;
+            }
+
+            //---------------------------------------------
+            if (accept1 && accept2)
+            {
+               
+                output = "cyclo"+AlkaneName(ChainCount(input));
+
+             
+            }
+
+            return output;
         }
     }
 }

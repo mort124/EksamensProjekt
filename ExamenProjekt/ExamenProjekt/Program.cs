@@ -320,20 +320,23 @@ namespace ExamenProjekt
             string output = "";
             int end = input.Length - 1;
             bool accept1 = false;
-            bool accept2 = false;
 
-            if (input[1] == '1')
+            if (input[1] == '1'&& input[end] == '1')
             {
                 accept1 = true;
             }
             
-            if (input[end]=='1')
+            if ( input[1] != '1' && input[end] == '1')
             {
-                accept2 = true;
+                output = "Du mangler start tal";
+            }
+            if (input[1] == '1' && input[end] != '1')
+            {
+                output = "Du mangler slut tal";
             }
 
             //---------------------------------------------
-            if (accept1 && accept2)
+            if (accept1)
             {
                
                 output = "cyclo"+AlkaneName(ChainCount(input));

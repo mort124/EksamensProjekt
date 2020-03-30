@@ -26,15 +26,34 @@ namespace ExamenProjekt
                         string alkane = AlkaneName(carbonCount);
                         Console.WriteLine(alkane);
 
-                        List<string> sideChainList = SideChains(molecule);
+                        List<Tuple<string,int>> sideChainList = SideChains(molecule);
 
-                        foreach (string item in sideChainList)
+
+                        List<string> chainNames = new List<string>();
+                        foreach (var item in sideChainList)
                         {
-                            int numLength = item.Count(Char.IsDigit);
-                            string sideChain = item.Substring(item.Length-numLength,numLength);
-                            sideChain += "-" + item.Substring(0, item.Length - numLength);
-                            Console.WriteLine(sideChain);
+                            if (!chainNames.Contains(item.Item1))
+                            {
+                                chainNames.Add(item.Item1);
+                            }
                         }
+                        chainNames.Sort();
+                        foreach (var item in chainNames)
+                        {
+                            int chainAmount = 0;
+                            foreach (var sideChain in sideChainList)
+                            {
+                                if (item == sideChain.Item1)
+                                {
+                                    chainAmount++;
+                                    Console.Write(sideChain.Item2 + ",");
+                                }
+                            }
+                            Console.Write("\b-");
+                            
+
+                        }
+
                     }
                 }
                 else
@@ -44,9 +63,53 @@ namespace ExamenProjekt
             }
         }
 
-        private static List<string> SideChains(string input)
+        private static string NumToPre(int amount)
         {
-            List<string> sideChainList = new List<string>();
+            string output = "";
+            switch (amount)
+            {
+                case 1:
+                    break;
+                case 2:
+                    output = "di";
+                    break;
+                case 3:
+                    output = "tri";
+                    break;
+                case 4:
+                    output = "tetra";
+                    break;
+                case 5:
+                    output = "penta";
+                    break;
+                case 6:
+                    output = "hexa";
+                    break;
+                case 7:
+                    output = "septo";
+                    break;
+                case 8:
+                    output = "octo";
+                    break;
+                case 9:
+                    output = "di";
+                    break;
+                case 10:
+                    output = "di";
+                    break;
+                case 11:
+                    output = "di";
+                    break;
+                case 12:
+                    output = "di";
+                    break;
+            }
+            return output;
+        }
+
+        private static List<Tuple<string,int>> SideChains(string input)
+        {
+            List<Tuple<string,int>> sideChainList = new List<Tuple<string,int>>();
             int chainPos = 0;
             string sideChain = "";
 
@@ -70,16 +133,15 @@ namespace ExamenProjekt
                     
                         string namedChain = AlkaneName(ChainCount(sideChain));
                         namedChain = namedChain.Remove(namedChain.Length - 2, 2);
-                        namedChain += "yl" + chainPos;
-
-                        sideChainList.Add(namedChain);
+                        namedChain += "yl";
+                        Tuple<string, int> outputChain = new Tuple<string,int>(namedChain,chainPos);
+                        sideChainList.Add(outputChain);
                     
 
                     i = sideEnd;
 
                     }
             }
-            sideChainList.Sort();
             return sideChainList;
         }
         private static int ChainCount(string input)

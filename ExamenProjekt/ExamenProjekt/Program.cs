@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExamenProjekt
 {
@@ -27,14 +23,16 @@ namespace ExamenProjekt
                         replacedM = replacedM.Replace("Br", "L").Replace("Cl", "K");
 
                         string mainChain = MainChain(replacedM);
+                        Alkane alkane1 = new Alkane(replacedM);
+                        Console.WriteLine(alkane1.GenerateName() + " ny\n");
                         int carbonCount = ChainCount(mainChain);
                         string alkane = AlkaneName(carbonCount);
-                        
-                        string Cyclo = CycloFinder(replacedM);
 
-                        Console.WriteLine(Cyclo);
+                        //string cyclo = CycloFinder(replacedM);
 
-                        List<Tuple<string, int>> sideChainList = SideChains(molecule);
+                        //Console.WriteLine(cyclo);
+
+                        List<Tuple<string, int>> sideChainList = SideChains(replacedM);
 
 
                         List<string> chainNames = new List<string>();
@@ -60,7 +58,7 @@ namespace ExamenProjekt
                             Console.Write("\b-");
                             Console.Write(NumToPre(chainAmount) + item + "-");
                         }
-                        Console.WriteLine("\b" + alkane + "\n");
+                        Console.WriteLine("\b" + alkane + " gammel\n");
 
 
                     }
@@ -71,6 +69,59 @@ namespace ExamenProjekt
                 }
             }
         }
+        /*private static List<Tuple<string, int>> Elements(string input)
+        {
+            int chainPos = 0;
+            List<Tuple<string, int>> ElementList = new List<Tuple<string, int>>();
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] == 'c' || input[i] == 'C')
+                {
+                    chainPos++;//Counts the number of c-atoms up to the start of the side chain
+                }
+                else
+                {
+                    string elementName;
+                    switch (input[i])
+                    {
+                        case 'L':
+                            elementName =  "brom";
+                            break;
+                        case 'K':
+                            elementName =  "chlor";
+                            break;
+                        case 'B':
+                            elementName =  "bor";
+                            break;
+                        case 'N':
+                            elementName =  "nitrogen";
+                            break;
+                        case 'O':
+                            elementName =  "oxygen";
+                            break;
+                        case 'P':
+                            elementName =  "fosfor";
+                            break;
+                        case 'S':
+                            elementName =  "sulfur";
+                            break;
+                        case 'F':
+                            elementName =  "flour";
+                            break;
+                        case 'I':
+                            elementName =  "iod";
+                            break;
+                        default:
+                            elementName =  @"N\A";
+                            break;
+                    }
+                    Tuple<string, int> element = new Tuple<string, int>(elementName, i);
+                    ElementList.Add(element);
+                }
+            }
+            return ElementList;
+        }*/
 
         private static string NumToPre(int amount) //converts number to standard prefix
         {
@@ -140,18 +191,73 @@ namespace ExamenProjekt
                     */
                     }
 
-                    string namedChain = AlkaneName(ChainCount(sideChain));
-                    namedChain = namedChain.Remove(namedChain.Length - 2, 2);
-                    namedChain += "yl";
-                    Tuple<string, int> outputChain = new Tuple<string, int>(namedChain, chainPos);
-                    sideChainList.Add(outputChain);
+                    int carbonCount = 0;
+                    int charCount;
+                    for (charCount = 0; charCount < sideChain.Length; charCount++)
+                    {
+                        if (sideChain[charCount] == 'C' || sideChain[charCount] == 'c')
+                            carbonCount++;
+                    }
 
+                    if (charCount == carbonCount)
+                    {
+                        string namedChain = AlkaneName(ChainCount(sideChain));
+                        namedChain = namedChain.Remove(namedChain.Length - 2, 2);
+                        namedChain += "yl";
+                        Tuple<string, int> outputChain = new Tuple<string, int>(namedChain, chainPos);
+                        sideChainList.Add(outputChain);
+                    }
+
+                    else
+                    {
+                        List<Tuple<string, int>> nestedChainList = new List<Tuple<string, int>>();
+                        nestedChainList = SideChains(sideChain);
+                        nestedChainList.Sort();
+                    }
 
                     i = sideEnd;
-
                 }
-
+                else
+                {
+                    string elementName;
+                    switch (input[i])
+                    {
+                        case 'L':
+                            elementName = "brom";
+                            break;
+                        case 'K':
+                            elementName = "chlor";
+                            break;
+                        case 'B':
+                            elementName = "bor";
+                            break;
+                        case 'N':
+                            elementName = "nitrogen";
+                            break;
+                        case 'O':
+                            elementName = "oxygen";
+                            break;
+                        case 'P':
+                            elementName = "fosfor";
+                            break;
+                        case 'S':
+                            elementName = "sulfur";
+                            break;
+                        case 'F':
+                            elementName = "flour";
+                            break;
+                        case 'I':
+                            elementName = "iod";
+                            break;
+                        default:
+                            elementName = @"N\A";
+                            break;
+                    }
+                    Tuple<string, int> element = new Tuple<string, int>(elementName, i);
+                    sideChainList.Add(element);
+                }
             }
+            sideChainList.Sort();
             return sideChainList;
         }
         private static int ChainCount(string input)
@@ -173,7 +279,7 @@ namespace ExamenProjekt
         {
             string output;
 
-            int index = input-1; /*The array is indexed in regrad to 0, there for the input-
+            int index = input - 1; /*The array is indexed in regrad to 0, there for the input-
             value is subtracted with 1*/
 
             string[] AlkaneList = new string[]
@@ -270,71 +376,18 @@ namespace ExamenProjekt
             return accept;
         }
 
-        private static List<Tuple<string, int>> Elements(string input)
-        {
-            int chainPos = 0;
-            List<Tuple<string, int>> ElementList = new List<Tuple<string, int>>();
-
-            for (int i = 0; i < input.Length; i++)
-            {
-                if (input[i] == 'c' || input[i] == 'C')
-                {
-                    chainPos++;//Counts the number of c-atoms up to the start of the side chain
-                }
-                else
-                {
-                    string elementName;
-                    switch (input[i])
-                    {
-                        case 'L':
-                            elementName =  "brom";
-                            break;
-                        case 'K':
-                            elementName =  "chlor";
-                            break;
-                        case 'B':
-                            elementName =  "bor";
-                            break;
-                        case 'N':
-                            elementName =  "nitrogen";
-                            break;
-                        case 'O':
-                            elementName =  "oxygen";
-                            break;
-                        case 'P':
-                            elementName =  "fosfor";
-                            break;
-                        case 'S':
-                            elementName =  "sulfur";
-                            break;
-                        case 'F':
-                            elementName =  "flour";
-                            break;
-                        case 'I':
-                            elementName =  "iod";
-                            break;
-                        default:
-                            elementName =  @"N\A";
-                            break;
-                    }
-                    Tuple<string, int> element = new Tuple<string, int>(elementName, i);
-                    ElementList.Add(element);
-                }
-            }
-            return ElementList;
-        }
         private static string CycloFinder(string input)
         {
             string output = "";
             int end = input.Length - 1;
             bool accept1 = false;
 
-            if (input[1] == '1'&& input[end] == '1')
+            if (input[1] == '1' && input[end] == '1')
             {
                 accept1 = true;
             }
-            
-            if ( input[1] != '1' && input[end] == '1')
+
+            if (input[1] != '1' && input[end] == '1')
             {
                 output = "Du mangler start tal";
             }
@@ -346,10 +399,10 @@ namespace ExamenProjekt
             //---------------------------------------------
             if (accept1)
             {
-               
-                output = "cyclo"+AlkaneName(ChainCount(input));
 
-             
+                output = "cyclo" + AlkaneName(ChainCount(input));
+
+
             }
 
             return output;

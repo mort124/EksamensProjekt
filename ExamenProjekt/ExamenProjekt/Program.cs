@@ -24,7 +24,9 @@ namespace ExamenProjekt
 
                         string mainChain = MainChain(replacedM);
                         Alkane alkane1 = new Alkane(replacedM);
-                        Console.WriteLine(alkane1.GenerateName() + " ny\n");
+                        alkane1.PrintChains();
+                        Console.WriteLine("\n");
+                        Console.WriteLine(alkane1.GenerateName());
                         int carbonCount = ChainCount(mainChain);
                         string alkane = AlkaneName(carbonCount);
 

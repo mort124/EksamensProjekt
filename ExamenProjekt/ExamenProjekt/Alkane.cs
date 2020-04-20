@@ -6,20 +6,15 @@ namespace ExamenProjekt
     class Alkane
     {
         private static string smileChain;
-        private static bool isSideChain;
-        private static int parentIndex;
-        private static List<Alkane> sideChainList;
+        private static Alkyl a;
 
-        public bool GetIsSide { get => isSideChain; }
-        public int GetParentIndex { get => parentIndex; }
         public string GetSmileChain { get => smileChain; }
-        public List<Alkane> GetSideList { get => sideChainList; }
 
 
         public static void ExtractSideChains()
         {
             int chainPos = 0;
-            Alkane sideChain;
+            Alkyl sideChain;
 
             for (int i = 0; i < smileChain.Length; i++)
             {
@@ -34,32 +29,72 @@ namespace ExamenProjekt
 
                     if (sideEnd - sideStart - 1 > 0)
                     {
-                        sideChain = new Alkane(smileChain.Substring(sideStart + 1, sideEnd - sideStart - 1), chainPos);/*creates a string in the interval 
+                        sideChain = new Alkyl(smileChain.Substring(sideStart + 1, sideEnd - sideStart - 1), chainPos);/*creates a string in the interval 
                     between sideStart and sideEnd. Adding and subtracting 1 to account for the parentheses 
                     */
-                        sideChainList.Add(sideChain);
+                        a.AddSideChain(sideChain);
                     }
 
 
                     i = sideEnd;
                 }
             }
-            sideChainList.Sort();
         }
 
-        public static string ExtractMain()
+        public void PrintChains()
         {
-            string output = smileChain;
-            for (int i = 0; i < smileChain.Length; i++)
+            System.Console.WriteLine(a.GetName);
+
+            foreach (Alkyl item in a.GetSideList)
             {
-                if (smileChain[i] == '(')
+                System.Console.WriteLine(item.GetName);
+            }
+        }
+
+        public string GenerateName()
+        {
+            List<string> chainNames = new List<string>();
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in a.GetSideList)
+            {
+                if (!chainNames.Contains(item.GetName))
+                {
+                    chainNames.Add(item.GetName);
+                }
+            }
+            chainNames.Sort();
+            foreach (var item in chainNames)
+            {
+                int chainAmount = 0;
+                foreach (var sideChain in a.GetSideList)
+                {
+                    if (item == sideChain.GetName)
+                    {
+                        chainAmount++;
+                        sb.Append(sideChain.GetParentIndex + ",");
+                    }
+                }
+                sb.Append("\b-");
+                sb.Append(NumToPre(chainAmount) + item + "-");
+            }
+            sb.Append("\b" + a.GetName + " ny\n");
+
+            return sb.ToString();
+        }
+
+        public static string ExtractMain(string input)
+        {
+            string output = input;
+            for (int i = 0; i < output.Length; i++)
+            {
+                if (output[i] == '(')
                 {
                     int sideStart = i;
                     int sideEnd = smileChain.IndexOf(')', sideStart);
 
                     if (sideEnd - sideStart + 1 > 0)
                     {
-                        output = smileChain.Remove(sideStart, sideEnd - sideStart + 1);
+                        output = output.Remove(sideStart, sideEnd - sideStart + 1);
                     }
                     i--;
                 }
@@ -69,32 +104,9 @@ namespace ExamenProjekt
 
         public override string ToString()
         {
-            return AlkaneName(ExtractMain());
+            return smileChain;
         }
 
-            StringBuilder sb = new StringBuilder();
-        public string GenerateName()
-        {
-            if (sideChainList.Count > 1)
-            {
-                foreach (var item in sideChainList)
-                {
-                    sb.Append(item.GenerateName());
-                }
-            }
-
-            if (isSideChain)
-            {
-                sb.Append(parentIndex + "-" + AlkaneName(ExtractMain()));
-            }
-
-            else
-            {
-            sb.Append(AlkaneName(ExtractMain()));
-
-            }
-            return sb.ToString();
-        }
 
         private static string NumToPre(int amount) //converts number to standard prefix
         {
@@ -140,54 +152,15 @@ namespace ExamenProjekt
             return output;
         }
 
-        private static string AlkaneName(string alkane)//Has a list of aklane names  
-        {
-            string output;
-            int chainLength = 0;
-
-            foreach (var item in alkane)
-            {
-                if (item == 'c' || item == 'C')
-                {
-                    chainLength++;
-                }
-            }
-
-            int index = chainLength - 1; /*The array is indexed in regrad to 0, there for the input-
-            value is subtracted with 1*/
-
-            string[] AlkaneList = new string[]
-            {
-                "metan", "ethan", "propan", "butan", "pentan", "hexan","heptan","octan","nonan","decan","undecan","dodecan"
-            };
-
-            output = AlkaneList[index];
-
-            if (isSideChain)
-            {
-                output = output.Remove(output.Length - 2, 2);
-                output += "yl";
-            }
-
-            return output;
-        }
 
         #region constructs
         public Alkane(string alkaneChain)
         {
-            isSideChain = false;
             smileChain = alkaneChain;
-            sideChainList = new List<Alkane>();
+            a = new Alkyl(ExtractMain(alkaneChain));
             ExtractSideChains();
         }
-        private Alkane(string alkaneChain, int indexOnParent)
-        {
-            smileChain = alkaneChain;
-            isSideChain = true;
-            parentIndex = indexOnParent;
-            sideChainList = new List<Alkane>();
-            ExtractSideChains();
-        }
+
         #endregion
     }
 }

@@ -20,6 +20,7 @@ namespace ExamenProjekt
         {
             int chainPos = 0;
             Alkane sideChain;
+
             for (int i = 0; i < smileChain.Length; i++)
             {
                 if (smileChain[i] == 'c' || smileChain[i] == 'C')

@@ -16,7 +16,13 @@ namespace ExamenProjekt
             bool run = true;
             while (run)
             {
+                
+                Console.WriteLine("\n For at skrive stoffet skal du huske disse regler:\n Du behøver ikke skrive CH men bare c  \n Dobbelt bindinger skrives med =" +
+                    "\n Trippel bindinger skrives med # \n Sidekæder skrives inde i () \n Hvis dit stof er aromatisk skrives det med lille C " +
+                    "\n HVis stoffer er en ring skrives det c1c*n1 f.eks: c1ccc1 ");
                 Console.WriteLine("Skriv stof her:"); //tager input fra brugeren
+
+
                 string molecule = Console.ReadLine();
 
                 if (molecule != "exit")//exit lukker programmet
@@ -29,39 +35,43 @@ namespace ExamenProjekt
                         string mainChain = MainChain(replacedM);
                         int carbonCount = ChainCount(mainChain);
                         string alkane = AlkaneName(carbonCount);
-                        
                         string Cyclo = CycloFinder(replacedM);
+                        //List<string> CharGroup = CharacteristicGroups(replacedM);
 
-                        Console.WriteLine(Cyclo);
 
                         List<Tuple<string, int>> sideChainList = SideChains(molecule);
 
-
-                        List<string> chainNames = new List<string>();
-                        foreach (var item in sideChainList)
+                        if (Cyclo == "")
                         {
-                            if (!chainNames.Contains(item.Item1))
+                            List<string> chainNames = new List<string>();
+                            foreach (var item in sideChainList)
                             {
-                                chainNames.Add(item.Item1);
-                            }
-                        }
-                        chainNames.Sort();
-                        foreach (var item in chainNames)
-                        {
-                            int chainAmount = 0;
-                            foreach (var sideChain in sideChainList)
-                            {
-                                if (item == sideChain.Item1)
+                                if (!chainNames.Contains(item.Item1))
                                 {
-                                    chainAmount++;
-                                    Console.Write(sideChain.Item2 + ",");
+                                    chainNames.Add(item.Item1);
                                 }
                             }
-                            Console.Write("\b-");
-                            Console.Write(NumToPre(chainAmount) + item + "-");
+                            chainNames.Sort();
+                            foreach (var item in chainNames)
+                            {
+                                int chainAmount = 0;
+                                foreach (var sideChain in sideChainList)
+                                {
+                                    if (item == sideChain.Item1)
+                                    {
+                                        chainAmount++;
+                                        Console.Write(sideChain.Item2 + ",");
+                                    }
+                                }
+                                Console.Write("\b-");
+                                Console.Write(NumToPre(chainAmount) + item + "-");
+                            }
+                            Console.WriteLine("\b" + alkane + "\n");
                         }
-                        Console.WriteLine("\b" + alkane + "\n");
-
+                        else
+                        {
+                            Console.WriteLine(Cyclo);
+                        }
 
                     }
                 }
@@ -328,29 +338,81 @@ namespace ExamenProjekt
             string output = "";
             int end = input.Length - 1;
             bool accept1 = false;
+            bool accept2 = false;
 
-            if (input[1] == '1'&& input[end] == '1')
+            if (input.Length>3)
             {
-                accept1 = true;
-            }
-            
-            if ( input[1] != '1' && input[end] == '1')
-            {
-                output = "Du mangler start tal";
-            }
-            if (input[1] == '1' && input[end] != '1')
-            {
-                output = "Du mangler slut tal";
+                accept2 = true;
             }
 
+            if (accept2)
+            {
+
+                if (input[1] == '1' && input[end] == '1')
+                {
+                    accept1 = true;
+                }
+                if (input[1] != '1' && input[end] == '1')
+                {
+                    output = "Du mangler start tal";
+                }
+                if (input[1] == '1' && input[end] != '1')
+                {
+                    output = "Du mangler slut tal";
+                }
+            }
             //---------------------------------------------
+           
+
             if (accept1)
             {
-               
-                output = "cyclo"+AlkaneName(ChainCount(input));
-
-             
+                if (input =="C1CCCCC1")
+                {
+                    output = "Benzen";
+                }
+                else
+                {
+                    output = "cyclo" + AlkaneName(ChainCount(input));
+                }
             }
+
+            return output;
+        }
+
+        private static List<string> CharacteristicGroups(List<string> input)
+        {
+            List<string> Groups = new List<string>();
+
+
+            foreach (var item in input)
+            {
+                if (item == "O" && item+1 == "H")
+                {
+                    Groups.Add("ol");
+                }
+                if (item == "C" && item+1 == "O" && item + 2 == "O" && item + 3 == "H")
+                {
+                    Groups.Add("Syre");
+                }
+                if (item == "N" && item + 1 == "H")
+                {
+                    Groups.Add("amin");
+                }
+            }
+           
+            return Groups;
+        }
+
+        private static string Bindings (string input)
+        {
+            string output="";
+
+            foreach (var item in input)
+            {
+
+
+            }
+           
 
             return output;
         }

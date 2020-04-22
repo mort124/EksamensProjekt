@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace ExamenProjekt
@@ -7,7 +8,21 @@ namespace ExamenProjekt
     {
         private static string smileChain;
         private static Alkyl a;
+        private static int CompareAlkyl(Alkyl a1, Alkyl a2)
+        {
+            string name1 = a1.GetName;
+            string name2 = a2.GetName;
+            return name1.CompareTo(name2);
+        }
+        private static int CompareAnomaly(Anomalies a1, Anomalies a2)
+        {
+            string name1 = a1.GetName;
+            string name2 = a2.GetName;
+            return name1.CompareTo(name2);
+        }
 
+        public static Comparison<Alkyl> comparisonAlkyl = new Comparison<Alkyl>(CompareAlkyl);
+        public static Comparison<Anomalies> comparisonAnomaly = new Comparison<Anomalies>(CompareAnomaly);
         public string GetSmileChain { get => smileChain; }
 
 
@@ -15,6 +30,7 @@ namespace ExamenProjekt
         {
             int chainPos = 0;
             Alkyl sideChain;
+            Anomalies anomaly;
 
             for (int i = 0; i < smileChain.Length; i++)
             {
@@ -37,6 +53,11 @@ namespace ExamenProjekt
 
 
                     i = sideEnd;
+                }
+                else
+                {
+                    anomaly = new Anomalies(smileChain[i], chainPos);
+                    a.AddAnomaly(anomaly);
                 }
             }
         }
@@ -62,6 +83,13 @@ namespace ExamenProjekt
                     chainNames.Add(item.GetName);
                 }
             }
+            foreach (var item in a.GetAnomalyList)
+            {
+                if (!chainNames.Contains(item.GetName))
+                {
+                    chainNames.Add(item.GetName);
+                }
+            }
             chainNames.Sort();
             foreach (var item in chainNames)
             {
@@ -72,6 +100,14 @@ namespace ExamenProjekt
                     {
                         chainAmount++;
                         sb.Append(sideChain.GetParentIndex + ",");
+                    }
+                }
+                foreach (var anomaly in a.GetAnomalyList)
+                {
+                    if (item == anomaly.GetName)
+                    {
+                        chainAmount++;
+                        sb.Append(anomaly.GetParentIndex + ",");
                     }
                 }
                 sb.Append("\b-");

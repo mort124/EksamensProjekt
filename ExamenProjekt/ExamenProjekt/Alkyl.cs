@@ -14,23 +14,24 @@ namespace ExamenProjekt
         private bool isSideChain;
         private int parentIndex;
         private List<Alkyl> sideChainList;
-        private static int CompareAlkyl(Alkyl a1, Alkyl a2)
-        {
-            string name1 = a1.name;
-            string name2 = a2.name;
-            return name1.CompareTo(name2);
-        }
-        Comparison<Alkyl> comparison = new Comparison<Alkyl>(CompareAlkyl);
+        private List<Anomalies> anomalyList;
+
 
         public bool GetIsSide { get => isSideChain; }
         public int GetParentIndex { get => parentIndex; }
         public string GetSmileChain { get => smileChain; }
         public string GetName { get => name; }
         public List<Alkyl> GetSideList { get => sideChainList; }
+        public List<Anomalies> GetAnomalyList { get => anomalyList; }
         public void AddSideChain(Alkyl sideChain)
         {
             sideChainList.Add(sideChain);
-            sideChainList.Sort(comparison);
+            sideChainList.Sort(Alkane.comparisonAlkyl);
+        }
+        public void AddAnomaly(Anomalies anomaly)
+        {
+            anomalyList.Add(anomaly);
+            anomalyList.Sort(Alkane.comparisonAnomaly);
         }
 
         private static string AlkaneName(string smile, bool isAlkyl)//Has a list of aklane names  
@@ -76,6 +77,7 @@ namespace ExamenProjekt
             smileChain = chainName;
             name = AlkaneName(chainName, false);
             sideChainList = new List<Alkyl>();
+            anomalyList = new List<Anomalies>();
             isSideChain = false;
         }
 
@@ -84,6 +86,7 @@ namespace ExamenProjekt
             smileChain = chainName;
             name = AlkaneName(chainName, true);
             sideChainList = new List<Alkyl>();
+            anomalyList = new List<Anomalies>();
             parentIndex = indexOnParent;
             isSideChain = true;
         }

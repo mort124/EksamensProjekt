@@ -215,6 +215,123 @@ namespace ExamenProjekt
             ExtrackAnomalies(a);
         }
 
+        private static string CycloFinder(Alkyl input)
+        {
+
+            string smileChain = input.GetSmileChain;
+            string output = "";
+            int end = smileChain.Length - 1;
+            bool accept1 = false;
+            bool accept2 = false;
+
+            if (smileChain.Length > 3)
+            {
+                accept2 = true;
+            }
+
+            if (accept2)
+            {
+
+                if (smileChain[1] == '1' && smileChain[end] == '1')
+                {
+                    accept1 = true;
+                }
+                if (smileChain[1] != '1' && smileChain[end] == '1')
+                {
+                    output = "Du mangler start tal";
+                }
+                if (smileChain[1] == '1' && smileChain[end] != '1')
+                {
+                    output = "Du mangler slut tal";
+                }
+            }
+            //---------------------------------------------
+
+
+            if (accept1)
+            {
+                if (smileChain == "C1CCCCC1")
+                {
+                    output = "Benzen";
+                }
+                else
+                {
+                    output = "cyclo" + AlkaneName(smileChain,input.GetIsSide);
+                }
+            }
+
+            return output;
+        }
+        private static string AlkaneName(string smile, bool isAlkyl)//Has a list of aklane names  
+        {
+            string output;
+            int chainLength = 0;
+
+            foreach (var item in smile)
+            {
+                if (item == 'c' || item == 'C')
+                {
+                    chainLength++;
+                }
+            }
+
+            int index = chainLength - 1; /*The array is indexed in regrad to 0, there for the input-
+            value is subtracted with 1*/
+
+            string[] AlkaneList = new string[]
+            {
+                "metan", "ethan", "propan", "butan", "pentan", "hexan","heptan","octan","nonan","decan","undecan","dodecan"
+            };
+
+            output = AlkaneList[index];
+
+            if (isAlkyl)
+            {
+                output = output.Remove(output.Length - 2, 2);
+                output += "yl";
+            }
+
+            return output;
+        }
+
+        private static List<string> CharacteristicGroups(List<string> input)
+        {
+            List<string> Groups = new List<string>();
+
+
+            foreach (var item in input)
+            {
+                if (item == "O" && item + 1 == "H")
+                {
+                    Groups.Add("ol");
+                }
+                if (item == "C" && item + 1 == "O" && item + 2 == "O" && item + 3 == "H")
+                {
+                    Groups.Add("Syre");
+                }
+                if (item == "N" && item + 1 == "H")
+                {
+                    Groups.Add("amin");
+                }
+            }
+
+            return Groups;
+        }
+
+        private static string Bindings(string input)
+        {
+            string output = "";
+
+            foreach (var item in input)
+            {
+
+
+            }
+
+
+            return output;
+        }
+
         #endregion
     }
 }

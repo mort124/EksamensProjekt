@@ -26,11 +26,10 @@ namespace ExamenProjekt
         public string GetSmileChain { get => smileChain; }
 
 
-        public static void ExtractSideChains()
+        public static void ExtractSideChains(Alkyl input)
         {
             int chainPos = 0;
             Alkyl sideChain;
-            Anomalies anomaly;
 
             for (int i = 0; i < smileChain.Length; i++)
             {
@@ -47,17 +46,28 @@ namespace ExamenProjekt
                     {
                         sideChain = new Alkyl(smileChain.Substring(sideStart + 1, sideEnd - sideStart - 1), chainPos);/*creates a string in the interval 
                     between sideStart and sideEnd. Adding and subtracting 1 to account for the parentheses 
-                    */
-                        a.AddSideChain(sideChain);
+                    */ input.AddSideChain(sideChain);
                     }
 
 
                     i = sideEnd;
                 }
+
+            }
+        }
+        public static void ExtrackAnomalies(Alkyl input)
+        {
+            int index = 0;
+            foreach (var item in input.GetSmileChain)
+            {
+                if(item != 'c' && item != 'C')
+                {
+                    Anomalies anomaly = new Anomalies(item, index);
+                    input.AddAnomaly(anomaly);
+                }
                 else
                 {
-                    anomaly = new Anomalies(smileChain[i], chainPos);
-                    a.AddAnomaly(anomaly);
+                    index++;
                 }
             }
         }
@@ -67,6 +77,10 @@ namespace ExamenProjekt
             System.Console.WriteLine(a.GetName);
 
             foreach (Alkyl item in a.GetSideList)
+            {
+                System.Console.WriteLine(item.GetName);
+            }
+            foreach (var item in a.GetAnomalyList)
             {
                 System.Console.WriteLine(item.GetName);
             }
@@ -194,7 +208,8 @@ namespace ExamenProjekt
         {
             smileChain = alkaneChain;
             a = new Alkyl(ExtractMain(alkaneChain));
-            ExtractSideChains();
+            ExtractSideChains(a);
+            ExtrackAnomalies(a);
         }
 
         #endregion

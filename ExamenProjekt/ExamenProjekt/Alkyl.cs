@@ -34,6 +34,7 @@ namespace ExamenProjekt
             anomalyList.Sort(Alkane.comparisonAnomaly);
         }
 
+
         private static string AlkaneName(string smile, bool isAlkyl)//Has a list of aklane names  
         {
             string output;

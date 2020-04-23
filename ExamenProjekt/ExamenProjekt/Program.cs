@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ExamenProjekt
 {
-    class Program
+    class Program //Hej
     {
         static void Main(string[] args)
         {

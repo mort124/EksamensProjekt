@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace ExamenProjekt
 {
-    class Alkyl
+    class Alkyl //hej
     {
-        private static string smileAlkyl;
-        private static int parentIndex;
-
-        public int GetParentIndex { get => parentIndex; }
-        public string GetSmileChain { get => smileAlkyl; }
-
         private string smileChain;
         private string name;
         private bool isSideChain;

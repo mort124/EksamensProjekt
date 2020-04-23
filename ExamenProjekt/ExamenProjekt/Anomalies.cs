@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ExamenProjekt
 {
-    class Anomalies
+    class Anomalies //hej
     {
         private string name;
         private char tooth;

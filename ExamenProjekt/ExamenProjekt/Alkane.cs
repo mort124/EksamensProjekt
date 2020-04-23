@@ -24,6 +24,7 @@ namespace ExamenProjekt
         public static Comparison<Alkyl> comparisonAlkyl = new Comparison<Alkyl>(CompareAlkyl);
         public static Comparison<Anomalies> comparisonAnomaly = new Comparison<Anomalies>(CompareAnomaly);
         public string GetSmileChain { get => smileChain; }
+        public List<Alkane> GetSideList { get => sideChainList; }
 
 
         public static void ExtractSideChains(Alkyl input)

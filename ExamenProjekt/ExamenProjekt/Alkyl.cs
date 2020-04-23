@@ -8,6 +8,11 @@ namespace ExamenProjekt
 {
     class Alkyl
     {
+        private static string smileAlkyl;
+        private static int parentIndex;
+
+        public int GetParentIndex { get => parentIndex; }
+        public string GetSmileChain { get => smileAlkyl; }
 
         private string smileChain;
         private string name;

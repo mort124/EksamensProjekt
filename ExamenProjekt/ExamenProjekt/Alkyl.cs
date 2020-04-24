@@ -39,6 +39,7 @@ namespace ExamenProjekt
             return name;
         }
 
+        #region construct
         public Alkyl(string chainName)
         {
 
@@ -58,5 +59,6 @@ namespace ExamenProjekt
             parentIndex = indexOnParent;
             isSideChain = true;
         }
+        #endregion
     }
 }

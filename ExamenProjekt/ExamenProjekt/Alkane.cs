@@ -68,7 +68,7 @@ namespace ExamenProjekt
             int index = 0;
             foreach (var item in input.GetSmileChain)
             {
-                if(item != 'c' && item != 'C')
+                if (item != 'c' && item != 'C' && item != 'Y')
                 {
                     Anomalies anomaly = new Anomalies(item, index);
                     input.AddAnomaly(anomaly);
@@ -135,8 +135,12 @@ namespace ExamenProjekt
                 sb.Append("\b-");//there is to many "," and replaces the last one with "-"
                 sb.Append(NumToPre(chainAmount) + item + "-");//Adds the sidechain or anomality with its position and a prefix to tell how many there is and a "-"
             }
-            sb.Append("\b" + a.GetName + " ny\n");//Adds the mainchain name 
+            sb.Append("\b" + a.GetName);//Adds the mainchain name 
 
+            if (a.GetSmileChain[a.GetSmileChain.Length - 1] == 'Y')
+            {
+                sb.Append("syre");
+            }
 
             return sb.ToString();
         }
@@ -254,7 +258,7 @@ namespace ExamenProjekt
                 }
                 else
                 {
-                    output = "cyclo" + AlkaneName(smileChain,input.GetIsSide);
+                    output = "cyclo" + AlkaneName(smileChain, input.GetIsSide);
                 }
             }
 
@@ -305,8 +309,7 @@ namespace ExamenProjekt
             anomalies.Add('F', "Flour");
             anomalies.Add('I', "Iod");
             anomalies.Add('O', "Oxygen");
-            anomalies.Add('T', "Ol");
-            anomalies.Add('Y', "Syre");
+            anomalies.Add('T', "hydroxy");
             string nameOut = anomalies[toothValue].ToString();
             return nameOut;
         }

@@ -17,12 +17,13 @@ namespace ExamenProjekt
         public int GetParentIndex { get => parentIndex; }
         public string GetName { get => name; }
 
+        #region
         public Anomalies (char smileValue, int indexOnParent)
         {
             tooth = smileValue;
             parentIndex = indexOnParent;
             name = Alkane.AnomalyName(smileValue);
         }
-
+        #endregion
     }
 }

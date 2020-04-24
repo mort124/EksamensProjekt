@@ -23,15 +23,21 @@ namespace ExamenProjekt
                     Console.WriteLine("\n For at skrive stoffet skal du huske disse regler:\n Du behøver ikke skrive CH men bare c  \n Dobbelt bindinger skrives med =" +
                     "\n Trippel bindinger skrives med # \n Sidekæder skrives inde i () \n Hvis dit stof er aromatisk skrives det med lille C " +
                     "\n HVis stoffer er en ring skrives det c1c*n1 f.eks: c1ccc1 ");
-                    Console.WriteLine("Skriv stof her:"); //tager input fra brugeren
+                    Console.WriteLine("Skriv stof her:"); //takes input from the user
 
                     viewed = true;
                 }
 
                 string molecule = Console.ReadLine();
 
-                if (molecule != "exit")//exit lukker programmet
+                if (molecule != "exit")//exit shuts down the program
                 {
+                    string replacedM = molecule.Replace("Br", "L").Replace("Cl", "R").Replace("OOH", "Y").Replace("OH", "T").Replace("OO", "U");
+                    string mainChain = replacedM;
+                    Alkane alkane1 = new Alkane(replacedM);
+                    alkane1.PrintChains();
+                    Console.WriteLine("\n");
+                    Console.WriteLine(alkane1.GenerateName());
 
                 }
                 else
@@ -49,7 +55,7 @@ namespace ExamenProjekt
             int StartParren = 0;
             int EndParren = 0;
 
-            foreach (var item in input)//tjækker parrenteser
+            foreach (var item in input)//checks the amount of parentheses 
             {
                 if (item == '(')
                 {
@@ -73,7 +79,7 @@ namespace ExamenProjekt
 
             int StartparrenPos = 0;
             int EndparrenPos = 0;
-            foreach (var item in input)//tjækker position af parrenteser
+            foreach (var item in input)//checks the position of parentheses
             {
                 if (item != '(')
                 {

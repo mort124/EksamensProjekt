@@ -46,7 +46,8 @@ namespace ExamenProjekt
                     {
                         sideChain = new Alkyl(smileChain.Substring(sideStart + 1, sideEnd - sideStart - 1), chainPos);/*creates a string in the interval 
                     between sideStart and sideEnd. Adding and subtracting 1 to account for the parentheses 
-                    */ input.AddSideChain(sideChain);
+                    */
+                        input.AddSideChain(sideChain);
                     }
 
 

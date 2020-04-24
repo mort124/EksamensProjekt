@@ -38,7 +38,7 @@ namespace ExamenProjekt
             anomalies.Add('I', "Iod");
             anomalies.Add('O', "Oxygen");
             anomalies.Add('T',"Ol");
-            anomalies.Add('E', "Ether");
+            anomalies.Add('U', "Ester");
             anomalies.Add('Y', "Syre");
 
             string nameOut = anomalies[toothValue].ToString();

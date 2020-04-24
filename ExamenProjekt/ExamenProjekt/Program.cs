@@ -33,7 +33,7 @@ namespace ExamenProjekt
                 if (molecule != "exit")//exit shuts down the program
                 {
                     string replacedM = molecule.Replace("Br", "L").Replace("Cl", "R").Replace("OOH", "Y").Replace("OH", "T").Replace("OO", "U");
-                    string mainChain = replacedM;
+                    
                     Alkane alkane1 = new Alkane(replacedM);
                     alkane1.PrintChains();
                     Console.WriteLine("\n");

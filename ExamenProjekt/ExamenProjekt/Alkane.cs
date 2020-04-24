@@ -61,13 +61,14 @@ namespace ExamenProjekt
             int index = 0;
             foreach (var item in input.GetSmileChain)
             {
-                if(item != 'c' && item != 'C')
+                if (item != 'c' && item != 'C' && !char.IsDigit(item))
                 {
                     Anomalies anomaly = new Anomalies(item, index);
                     input.AddAnomaly(anomaly);
                 }
                 else
                 {
+
                     index++;
                 }
             }
@@ -216,10 +217,10 @@ namespace ExamenProjekt
             ExtrackAnomalies(a);
         }
 
-        private static string CycloFinder(Alkyl input)
+        private static string CycloFinder(string input)
         {
 
-            string smileChain = input.GetSmileChain;
+            string smileChain = input;
             string output = "";
             int end = smileChain.Length - 1;
             bool accept1 = false;
@@ -257,7 +258,7 @@ namespace ExamenProjekt
                 }
                 else
                 {
-                    output = "cyclo" + AlkaneName(smileChain,input.GetIsSide);
+                    output = "cyclo" + AlkaneName(smileChain, false);
                 }
             }
 
@@ -267,6 +268,7 @@ namespace ExamenProjekt
         {
             string output;
             int chainLength = 0;
+
 
             foreach (var item in smile)
             {
@@ -291,48 +293,17 @@ namespace ExamenProjekt
                 output = output.Remove(output.Length - 2, 2);
                 output += "yl";
             }
-
-            return output;
-        }
-
-        private static List<string> CharacteristicGroups(List<string> input)
-        {
-            List<string> Groups = new List<string>();
-
-
-            foreach (var item in input)
+            foreach (var item in smile)
             {
-                if (item == "O" && item + 1 == "H")
+                if (char.IsDigit(item))
                 {
-                    Groups.Add("ol");
-                }
-                if (item == "C" && item + 1 == "O" && item + 2 == "O" && item + 3 == "H")
-                {
-                    Groups.Add("Syre");
-                }
-                if (item == "N" && item + 1 == "H")
-                {
-                    Groups.Add("amin");
+                     output = CycloFinder(smile);
+                    
+                    break;
                 }
             }
-
-            return Groups;
-        }
-
-        private static string Bindings(string input)
-        {
-            string output = "";
-
-            foreach (var item in input)
-            {
-
-
-            }
-
-
             return output;
         }
-
         #endregion
     }
 }

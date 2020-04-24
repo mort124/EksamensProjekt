@@ -21,15 +21,18 @@ namespace ExamenProjekt
             {
 
 
-                    Console.WriteLine("Skriv stof her:"); //tager input fra brugeren
+                    Console.WriteLine("Skriv stof her:"); //takes input from the user
                 string molecule = Console.ReadLine();
 
-                if (molecule != "exit")//exit lukker programmet
+                if (molecule != "exit")//exit shuts down the program
                 {
                     try
                     {
-                        Alkane alkane = new Alkane(molecule);
-                        Console.WriteLine(alkane.GenerateName());
+                        string replacedM = molecule.Replace("Br", "L").Replace("Cl", "R").Replace("OOH", "Y").Replace("OH", "T").Replace("OO", "U");
+                        string mainChain = replacedM;
+                        Alkane alkane1 = new Alkane(replacedM);
+                        Console.WriteLine("\n");
+                        Console.WriteLine(alkane1.GenerateName());
                     }
                     catch
                     {
@@ -51,7 +54,7 @@ namespace ExamenProjekt
             int StartParren = 0;
             int EndParren = 0;
 
-            foreach (var item in input)//tjækker parrenteser
+            foreach (var item in input)//checks the amount of parentheses 
             {
                 if (item == '(')
                 {
@@ -75,7 +78,7 @@ namespace ExamenProjekt
 
             int StartparrenPos = 0;
             int EndparrenPos = 0;
-            foreach (var item in input)//tjækker position af parrenteser
+            foreach (var item in input)//checks the position of parentheses
             {
                 if (item != '(')
                 {

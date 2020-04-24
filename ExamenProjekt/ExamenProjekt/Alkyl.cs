@@ -34,38 +34,6 @@ namespace ExamenProjekt
         }
 
 
-        private static string AlkaneName(string smile, bool isAlkyl)//Has a list of aklane names  
-        {
-            string output;
-            int chainLength = 0;
-
-            foreach (var item in smile)
-            {
-                if (item == 'c' || item == 'C')
-                {
-                    chainLength++;
-                }
-            }
-
-            int index = chainLength - 1; /*The array is indexed in regrad to 0, there for the input-
-            value is subtracted with 1*/
-
-            string[] AlkaneList = new string[]
-            {
-                "metan", "ethan", "propan", "butan", "pentan", "hexan","heptan","octan","nonan","decan","undecan","dodecan"
-            };
-
-            output = AlkaneList[index];
-
-            if (isAlkyl)
-            {
-                output = output.Remove(output.Length - 2, 2);
-                output += "yl";
-            }
-
-            return output;
-        }
-
         public override string ToString()
         {
             return name;
@@ -75,7 +43,7 @@ namespace ExamenProjekt
         {
 
             smileChain = chainName;
-            name = AlkaneName(chainName, false);
+            name = Alkane.AlkaneName(chainName, false);
             sideChainList = new List<Alkyl>();
             anomalyList = new List<Anomalies>();
             isSideChain = false;
@@ -84,14 +52,11 @@ namespace ExamenProjekt
         public Alkyl(string chainName, int indexOnParent)
         {
             smileChain = chainName;
-            name = AlkaneName(chainName, true);
+            name = Alkane.AlkaneName(chainName, true);
             sideChainList = new List<Alkyl>();
             anomalyList = new List<Anomalies>();
             parentIndex = indexOnParent;
             isSideChain = true;
         }
-
-
-
     }
 }

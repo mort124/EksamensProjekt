@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,6 +9,7 @@ namespace ExamenProjekt
     {
         private static string smileChain;
         private static Alkyl a;
+
         private static int CompareAlkyl(Alkyl a1, Alkyl a2)//compares the sidechains to sort them alphabeticaly
         {
             string name1 = a1.GetName;
@@ -54,7 +56,12 @@ namespace ExamenProjekt
                 }
 
             }
+            foreach (var item in input.GetSideList)
+            {
+                ExtrackAnomalies(item);
+            }
         }
+
         public static void ExtrackAnomalies(Alkyl input)
         {
             int index = 0;
@@ -141,7 +148,7 @@ namespace ExamenProjekt
                 if (output[i] == '(')// findes the position to the start of the sidechain
                 {
                     int sideStart = i;
-                    int sideEnd = smileChain.IndexOf(')', sideStart);// finds the position to the end of the sidechain
+                    int sideEnd = output.IndexOf(')', sideStart);// finds the position to the end of the sidechain
 
                     if (sideEnd - sideStart + 1 > 0)
                     {
@@ -205,16 +212,6 @@ namespace ExamenProjekt
             return output;
         }
 
-
-        #region constructs
-        public Alkane(string alkaneChain)
-        {
-            smileChain = alkaneChain;
-            a = new Alkyl(ExtractMain(alkaneChain));
-            ExtractSideChains(a);
-            ExtrackAnomalies(a);
-        }
-
         private static string CycloFinder(Alkyl input)
         {
 
@@ -262,7 +259,7 @@ namespace ExamenProjekt
 
             return output;
         }
-        private static string AlkaneName(string smile, bool isAlkyl)//Has a list of aklane names  
+        public static string AlkaneName(string smile, bool isAlkyl)//Has a list of aklane names  
         {
             string output;
             int chainLength = 0;
@@ -294,44 +291,34 @@ namespace ExamenProjekt
             return output;
         }
 
-        private static List<string> CharacteristicGroups(List<string> input)
+        public static string AnomalyName(char toothValue)
         {
-            List<string> Groups = new List<string>();
-
-
-            foreach (var item in input)
-            {
-                if (item == "O" && item + 1 == "H")
-                {
-                    Groups.Add("ol");
-                }
-                if (item == "C" && item + 1 == "O" && item + 2 == "O" && item + 3 == "H")
-                {
-                    Groups.Add("Syre");
-                }
-                if (item == "N" && item + 1 == "H")
-                {
-                    Groups.Add("amin");
-                }
-            }
-
-            return Groups;
+            Hashtable anomalies = new Hashtable();
+            anomalies.Add('K', "kalium");
+            anomalies.Add('L', "Brom");
+            anomalies.Add('R', "Chlor");
+            anomalies.Add('B', "Bor");
+            anomalies.Add('N', "Amin");
+            anomalies.Add('P', "Fosfor");
+            anomalies.Add('S', "Sulfur");
+            anomalies.Add('F', "Flour");
+            anomalies.Add('I', "Iod");
+            anomalies.Add('O', "Oxygen");
+            anomalies.Add('T', "Ol");
+            anomalies.Add('Y', "Syre");
+            string nameOut = anomalies[toothValue].ToString();
+            return nameOut;
         }
 
-        private static string Bindings(string input)
+        #region constructs
+        public Alkane(string alkaneChain)
         {
-            string output = "";
+            smileChain = alkaneChain;
+            a = new Alkyl(ExtractMain(alkaneChain));
+            ExtractSideChains(a);
+            ExtrackAnomalies(a);
 
-            foreach (var item in input)
-            {
-
-
-            }
-
-
-            return output;
         }
-
         #endregion
     }
 }

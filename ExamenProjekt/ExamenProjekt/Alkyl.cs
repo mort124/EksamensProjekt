@@ -42,7 +42,6 @@ namespace ExamenProjekt
         #region construct
         public Alkyl(string chainName)
         {
-
             smileChain = chainName;
             name = Alkane.AlkaneName(chainName, false);
             sideChainList = new List<Alkyl>();

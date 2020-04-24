@@ -68,7 +68,7 @@ namespace ExamenProjekt
             int index = 0;
             foreach (var item in input.GetSmileChain)
             {
-                if(item != 'c' && item != 'C' && && !char.IsDigit(item) && item != 'Y')
+                if(item != 'c' && item != 'C' && !char.IsDigit(item) && item != 'Y')
                 {
                     Anomalies anomaly = new Anomalies(item, index);
                     input.AddAnomaly(anomaly);
@@ -219,47 +219,18 @@ namespace ExamenProjekt
         }
 
 
-        #region constructs
-        public Alkane(string alkaneChain)
-        {
-            smileChain = alkaneChain;
-            a = new Alkyl(ExtractMain(alkaneChain));
-            ExtractSideChains(a);
-            ExtrackAnomalies(a);
-        }
-
         private static string CycloFinder(string input)
-        private static string CycloFinder(Alkyl input)
         {
 
             string smileChain = input;
             string output = "";
             int end = smileChain.Length - 1;
             bool accept1 = false;
-            bool accept2 = false;
 
             if (smileChain.Length > 3)
             {
-                accept2 = true;
+                accept1 = true;
             }
-
-            if (accept2)
-            {
-
-                if (smileChain[1] == '1' && smileChain[end] == '1')
-                {
-                    accept1 = true;
-                }
-                if (smileChain[1] != '1' && smileChain[end] == '1')
-                {
-                    output = "Du mangler start tal";
-                }
-                if (smileChain[1] == '1' && smileChain[end] != '1')
-                {
-                    output = "Du mangler slut tal";
-                }
-            }
-            //---------------------------------------------
 
 
             if (accept1)
@@ -270,11 +241,11 @@ namespace ExamenProjekt
                 }
                 else
                 {
-                    output = "cyclo" + AlkaneName(smileChain, false);
+                     output = "cyclo";
                 }
             }
-
             return output;
+
         }
         public static string AlkaneName(string smile, bool isAlkyl)//Has a list of aklane names  
         {
@@ -306,6 +277,8 @@ namespace ExamenProjekt
                 output += "yl";
             }
 
+            output = CycloFinder(smile) + output;
+
             return output;
         }
 
@@ -334,17 +307,6 @@ namespace ExamenProjekt
             a = new Alkyl(ExtractMain(alkaneChain));
             ExtractSideChains(a);
             ExtrackAnomalies(a);
-
-            foreach (var item in smile)
-            {
-                if (char.IsDigit(item))
-                {
-                     output = CycloFinder(smile);
-                    
-                    break;
-                }
-            }
-            return output;
         }
         #endregion
     }

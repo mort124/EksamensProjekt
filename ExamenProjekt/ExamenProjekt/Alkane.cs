@@ -68,13 +68,14 @@ namespace ExamenProjekt
             int index = 0;
             foreach (var item in input.GetSmileChain)
             {
-                if (item != 'c' && item != 'C' && item != 'Y')
+                if(item != 'c' && item != 'C' && && !char.IsDigit(item) && item != 'Y')
                 {
                     Anomalies anomaly = new Anomalies(item, index);
                     input.AddAnomaly(anomaly);
                 }
                 else
                 {
+
                     index++;
                 }
             }
@@ -217,10 +218,21 @@ namespace ExamenProjekt
             return output;
         }
 
+
+        #region constructs
+        public Alkane(string alkaneChain)
+        {
+            smileChain = alkaneChain;
+            a = new Alkyl(ExtractMain(alkaneChain));
+            ExtractSideChains(a);
+            ExtrackAnomalies(a);
+        }
+
+        private static string CycloFinder(string input)
         private static string CycloFinder(Alkyl input)
         {
 
-            string smileChain = input.GetSmileChain;
+            string smileChain = input;
             string output = "";
             int end = smileChain.Length - 1;
             bool accept1 = false;
@@ -258,7 +270,7 @@ namespace ExamenProjekt
                 }
                 else
                 {
-                    output = "cyclo" + AlkaneName(smileChain, input.GetIsSide);
+                    output = "cyclo" + AlkaneName(smileChain, false);
                 }
             }
 
@@ -268,6 +280,7 @@ namespace ExamenProjekt
         {
             string output;
             int chainLength = 0;
+
 
             foreach (var item in smile)
             {
@@ -322,6 +335,16 @@ namespace ExamenProjekt
             ExtractSideChains(a);
             ExtrackAnomalies(a);
 
+            foreach (var item in smile)
+            {
+                if (char.IsDigit(item))
+                {
+                     output = CycloFinder(smile);
+                    
+                    break;
+                }
+            }
+            return output;
         }
         #endregion
     }

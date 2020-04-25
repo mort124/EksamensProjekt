@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExamenProjekt
 {
-    class Alkyl //hej
+    class Alkyl
     {
         private string smileChain;
         private string name;
@@ -40,7 +40,7 @@ namespace ExamenProjekt
         }
 
         #region construct
-        public Alkyl(string chainName)
+        public Alkyl(string chainName) //Creates main chain Alkyl when no index on parent is provided
         {
             smileChain = chainName;
             name = Alkane.AlkaneName(chainName, false);
@@ -49,7 +49,7 @@ namespace ExamenProjekt
             isSideChain = false;
         }
 
-        public Alkyl(string chainName, int indexOnParent)
+        public Alkyl(string chainName, int indexOnParent) //creates side chain alkyl when index on parent is provided
         {
             smileChain = chainName;
             name = Alkane.AlkaneName(chainName, true);

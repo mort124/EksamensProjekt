@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ExamenProjekt
 {
-    class Program //Hej
+    class Program
     {
         static void Main(string[] args)
         {
@@ -28,9 +28,8 @@ namespace ExamenProjekt
                 {
                     try
                     {
-                        string replacedM = molecule.Replace("Br", "L").Replace("Cl", "R").Replace("OOH", "Y").Replace("OH", "T").Replace("OO", "U");
-                        string mainChain = replacedM;
-                        Alkane alkane1 = new Alkane(replacedM);
+                        string replacedM = molecule.Replace("Br", "L").Replace("Cl", "R").Replace("OOH", "Y").Replace("OH", "T").Replace("OO", "U"); // prepares string by compressing large groups into single chars
+                        Alkane alkane1 = new Alkane(replacedM); //sends string to the Alkane object for evaluation
                         string name = alkane1.GenerateName();
                         using (StreamWriter file = new StreamWriter(@"ouput.txt",true))
                         {

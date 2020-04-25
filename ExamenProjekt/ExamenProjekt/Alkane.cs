@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ExamenProjekt
 {
-    class Alkane //hej
+    class Alkane
     {
         private static string smileChain;
         private static Alkyl a;
@@ -68,20 +68,19 @@ namespace ExamenProjekt
             int index = 0;
             foreach (var item in input.GetSmileChain)
             {
-                if(item != 'c' && item != 'C' && !char.IsDigit(item) && item != 'Y')
+                if (item != 'c' && item != 'C' && !char.IsDigit(item) && item != 'Y')
                 {
                     Anomalies anomaly = new Anomalies(item, index);
                     input.AddAnomaly(anomaly);
                 }
                 else
                 {
-
                     index++;
                 }
             }
         }
 
-        public void PrintChains()
+        public void PrintChains() //writes all components one line at a time. useful in testing
         {
             System.Console.WriteLine(a.GetName);
 
@@ -101,14 +100,14 @@ namespace ExamenProjekt
             StringBuilder sb = new StringBuilder();
             foreach (var item in a.GetSideList)
             {
-                if (!chainNames.Contains(item.GetName))//checks if the sidechain is allready on the list
+                if (!chainNames.Contains(item.GetName))//checks if the sidechain is already on the list
                 {
                     chainNames.Add(item.GetName);
                 }
             }
             foreach (var item in a.GetAnomalyList)
             {
-                if (!chainNames.Contains(item.GetName))//checks if the anomaly is allready on the list
+                if (!chainNames.Contains(item.GetName))//checks if the anomaly is already on the list
                 {
                     chainNames.Add(item.GetName);
                 }
@@ -227,7 +226,7 @@ namespace ExamenProjekt
             int end = smileChain.Length - 1;
             bool accept1 = false;
 
-            if (smileChain.Length > 3)
+            if (smileChain.Length > 3 && smileChain[1] == '1' && smileChain[smileChain.Length - 1] == '1')
             {
                 accept1 = true;
             }
@@ -241,13 +240,13 @@ namespace ExamenProjekt
                 }
                 else
                 {
-                     output = "cyclo";
+                    output = "cyclo";
                 }
             }
             return output;
 
         }
-        public static string AlkaneName(string smile, bool isAlkyl)//Has a list of aklane names  
+        public static string AlkaneName(string smile, bool isSide)//Has a list of aklane names  
         {
             string output;
             int chainLength = 0;
@@ -271,7 +270,7 @@ namespace ExamenProjekt
 
             output = AlkaneList[index];
 
-            if (isAlkyl)
+            if (isSide)
             {
                 output = output.Remove(output.Length - 2, 2);
                 output += "yl";
